@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+
+<div id="dashboard_div">
+    <div id="piechart_div" class="chart"></div>
+    <div id="barchart_div" class="chart"></div>
+    <div id="linechart_div" class="chart"></div>
+    <div id="calendar_div" class="chart"></div>
+</div>
+
+<!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+<script type="text/javascript" src="./googlejsapi.js"></script>
+<script type="text/javascript" src="drawThatChart.js"></script>
+<script type="text/javascript">
+    'use strict';
+
+    var dashboardElement = document.getElementById('dashboard_div');
+    var piechartElement = document.getElementById('piechart_div');
+    var linechartElement = document.getElementById('linechart_div');
+    var barchartElement = document.getElementById('barchart_div');
+    var calendarElement = document.getElementById('calendar_div');
+
+    var normalData = [
+        ['string', 'number', 'number'],
+        ['Type of vehicles', 'Number of accidents', 'Number of dead'],
+        ['Car', 16, 9],
+        ['Bike', 3, 1],
+        ['Autocar', 2, 8]
+    ];
+
+    var dataforwordtree = [
+        ['string'],
+        ['Phrases'],
+        ['cats are better than dogs'],
+        ['cats eat kibble'],
+        ['cats are better than hamsters'],
+        ['cats are awesome'],
+        ['cats are people too'],
+        ['cats eat mice'],
+        ['cats meowing'],
+        ['cats in the cradle'],
+        ['cats eat mice'],
+        ['cats in the cradle lyrics'],
+        ['cats eat kibble'],
+        ['cats for adoption'],
+        ['cats are family'],
+        ['cats eat mice'],
+        ['cats are better than kittens'],
+        ['cats are evil'],
+        ['cats are weird'],
+        ['cats eat mice']
+    ];
+
+    //Pour les graphes annotés, chaque colonnes (sauf pour la date) doit être suivi d'une colonne String pour les annotations
+    var dataforAnnotation = [
+        ['date', 'number', 'string'],
+        ['A particular date', 'Number of accidents', 'Type of vehicles'],
+        [new Date(2015, 9, 13), 2, 'Autocar'],
+        [new Date(2015, 11, 13), 16, 'Car'],
+        [new Date(2015, 12, 13), 3, 'Bike']
+    ];
+
+    var dataforTimeline = [
+        ['string', 'date', 'date'],
+        ['president', 'start', 'end'],
+        ['Washington', new Date(1789, 3, 30), new Date(1797, 2, 4)],
+        ['Adams', new Date(1797, 2, 4), new Date(1801, 2, 4)],
+        ['Jefferson', new Date(1801, 2, 4), new Date(1809, 2, 4)]
+    ];
+
+    var dataforCalendar = [
+        ['date', 'number'],
+        ['Date', 'Won/Loss'],
+        [new Date(2012, 3, 13), 37032],
+        [new Date(2012, 3, 14), 38024],
+        [new Date(2012, 3, 15), 38024],
+        [new Date(2012, 3, 16), 38108],
+        [new Date(2012, 3, 17), 38229],
+        [new Date(2013, 9, 4), 38177],
+        [new Date(2013, 9, 5), 38705],
+        [new Date(2013, 9, 12), 38210],
+        [new Date(2013, 9, 13), 38029],
+        [new Date(2013, 9, 19), 38823],
+        [new Date(2013, 9, 23), 38345],
+        [new Date(2013, 9, 24), 38436],
+        [new Date(2013, 9, 30), 38447]
+    ];
+
+    var dataforLinechart = [
+        ['string', 'number', 'number'],
+        ['Year', 'Sales', 'Expenses'],
+        ['2004', 1000, 400],
+        ['2005', 1170, 460],
+        ['2006', 660, 1120],
+        ['2007', 1030, 540],
+        ['2005', 1170, 460],
+        ['2006', 660, 1120],
+        ['2007', 1030, 540],
+        ['2005', 1170, 460],
+        ['2006', 660, 1120],
+        ['2007', 1030, 540],
+        ['2005', 1170, 460],
+        ['2006', 660, 1120],
+        ['2007', 1030, 540]
+    ];
+
+    google.setOnLoadCallback(function () {
+        var dashboard = new google.visualization.Dashboard(dashboardElement);
+        var LineChart = drawChart('LineChart', {
+            title: "Line chart"
+        }, linechartElement, dataforLinechart);
+        var PieChart = drawChart('PieChart', {
+            title: "Répartition des accidents",
+            width: 300,
+            height: 300
+        }, piechartElement, normalData);
+        var BarChart = drawChart('BarChart', {
+            title: "Répartition des accidents",
+            width: 300,
+            height: 300
+        }, barchartElement, normalData);
+        var calendarChart = drawChart('Calendar', {
+            title: 'Graphe calendrier',
+            curveType: 'function'
+        }, calendarElement, dataforCalendar);
+    });
+
+</script>
+</body>
+</html>
