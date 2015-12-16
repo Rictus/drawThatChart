@@ -24,16 +24,17 @@
     var dashboardElement = document.getElementById('dashboard_div');
     var dashboard = new google.visualization.Dashboard(dashboardElement);
 
-    function chartitAppendit(tableData, typeofchart, additionnalStyle) {
+
+    function chartitAppendit(tableData, typeOfchart, additionnalStyle) {
         if (!window.nbChart) {
             window.nbChart = 0;
         }
         additionnalStyle = additionnalStyle ? additionnalStyle : {};
         var elem = document.createElement('div');
         elem.classList.add('chart');
-        elem.id = typeofchart + "_" + ++window.nbChart;
+        elem.id = typeOfchart + "_" + ++window.nbChart;
         dashboardElement.appendChild(elem);
-        drawChart(typeofchart, additionnalStyle, elem, tableData);
+        drawChart(typeOfchart, additionnalStyle, elem, tableData);
     }
 
     var pieChartData = [
@@ -88,7 +89,28 @@
         ['2007', 1030, 540]
     ];
 
+
     google.setOnLoadCallback(function () {
+
+        /**
+         *  chartitAppendit
+         * @param tableData (Array)
+         *
+         * @param typeofchart (String)
+         *   PieChart    | AreaChart  | AnnotationChart | BarChart |
+         *   ColumnChart | ComboChart | ScatterChart    | SteppedAreaChart |
+         *   Table       | Timeline   | WordTree        | LineChart | Calendar
+         *
+         * @param additionnalStyle (Object)
+         *        {
+         *           title              : (string)  Title of chart default ''
+         *           width              : (int)     Default 'auto'
+         *           height             : (int)     Default 'auto'
+         *           displayAnnotations : (boolean) Only for AnnotationChart default false
+         *           is3D               : (boolean) Some chart can be display in 3D. False to force
+         *         }
+         */
+
         chartitAppendit(lineChartData, 'LineChart', {
             title: "Line chart"
         });

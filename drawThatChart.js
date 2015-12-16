@@ -5,17 +5,20 @@ google.load('visualization', '1.0', {'packages': ['corechart', 'AnnotationChart'
 
 
 /**
- * @param typeOfChart Supported : PieChart | AreaChart | AnnotationChart | BarChart | ColumnChart | ComboChart | ScatterChart | SteppedAreaChart | Table | Timeline | WordTree | LineChart | Calendar
+ * @param typeOfChart (String)
+ *   PieChart    | AreaChart  | AnnotationChart | BarChart |
+ *   ColumnChart | ComboChart | ScatterChart    | SteppedAreaChart |
+ *   Table       | Timeline   | WordTree        | LineChart | Calendar
  *                    Some charts may require a special construction of array (givenData)
  * @param htmlElemToPutChart The chart will be put inside this html element
- * @param options
- *  {
- *    title : Title of chart default ''
- *    width : default 'auto'
- *    height : default 'auto'
- *    displayAnnotations : Only for AnnotationChart default false
- *    is3D :  Some chart can be display in 3D. False to force
- *    crosshair : Display lines in coordinate to show which (x,y) your cursor point
+ * @param options (Object)
+ * {
+ *    title              : (string)  Title of chart default ''
+ *    width              : (int)     Default 'auto'
+ *    height             : (int)     Default 'auto'
+ *    displayAnnotations : (boolean) Only for AnnotationChart default false
+ *    is3D               : (boolean) Some chart can be display in 3D. False to force
+ *    crosshair          : (object)  Display lines in coordinate to show which (x,y) your cursor point
  *  }
  * @param givenData
  *  First row : types of data for each column (number, date, string, ...)
@@ -23,12 +26,17 @@ google.load('visualization', '1.0', {'packages': ['corechart', 'AnnotationChart'
  *  Next row : Data
  */
 function drawChart(typeOfChart, options, htmlElemToPutChart, givenData) {
-    console.groupCollapsed();
-
+    var activeLog = false;
     var chart;
     var opt;
     var data;
 
+
+    if (activeLog) {
+        console.groupCollapsed();
+        console.log("type of chart : " + typeOfChart);
+        console.log("Given options : " + JSON.stringify(options));
+    }
 
     data = new google.visualization.DataTable();
 
@@ -36,13 +44,13 @@ function drawChart(typeOfChart, options, htmlElemToPutChart, givenData) {
     //First line should be types
     //Second line should be row titles
     for (var i = 0; i < givenData[0].length; i++) {
-        console.log("Adding head : " + givenData[0][i] + "  " + givenData[1][i]);
+        if (activeLog) console.log("Adding head : " + givenData[0][i] + "  " + givenData[1][i]);
         data.addColumn(givenData[0][i], givenData[1][i]);
     }
     //Iterating through rows
     //Each row should correspond to types given in header
     for (i = 2; i < givenData.length; i++) {
-        console.log("Adding row : " + givenData[i]);
+        if (activeLog) console.log("Adding row : " + givenData[i]);
         data.addRows([givenData[i]]);
     }
 
@@ -74,13 +82,13 @@ function drawChart(typeOfChart, options, htmlElemToPutChart, givenData) {
             chart = new google.visualization[typeOfChart](htmlElemToPutChart);
             break;
         default:
-            console.groupEnd();
+            if (activeLog) console.groupEnd();
             console.error("The given type of chart isn't correct : " + typeOfChart);
             return false;
             break;
     }
     chart.draw(data, opt);
-    console.groupEnd();
+    if (activeLog) console.groupEnd();
     return chart;
 }
 
